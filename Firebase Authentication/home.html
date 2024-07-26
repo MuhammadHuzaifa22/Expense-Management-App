@@ -12,34 +12,46 @@
     <div class="content container">
         <h1>Expense Management App</h1>
         <form id="expense-from">
-            <input type="text" placeholder="Enter expense name eg: SMIT Fees ">
+            <input type="text" placeholder="Enter expense name eg: Institute Fees" id="expense-type">
             <input type="number" placeholder="Enter expense amount eg: 1000" id="expense">
-            <button type="submit">Add To List </button>
+            <button type="submit" >Add To List </button>
         </form>
 
     </div>
+    <p id="output"></p>
 
   <div class="list-section">
    <div class="list-navbar-section">
    <div class="expense-type">
     <h4>Expense</h4>
-    <p>SMIT FEES</p>
+    <ul id="ul-expense-type">
+      
+    </ul>
    </div>  
-
    <div class="expense-amount">
-    <h4>Amount</h4>
-    <p>1000</p>
-   </div>
-
-   <div class="expense-date">
-     <h4>Date</h4>
-     <p>7/25/2024</p>
-   </div>
-
-   </div> 
+     <h4>Amount</h4>
+     <ul id="ul-expense-amount">
+      
+    </ul>
+    </div>
+    
+    <div class="expense-date">
+      <h4>Date & Time</h4>
+      <ul id="ul-expense-date">
+      
+      </ul>
+    </div>
+    
+  </div> 
+  <div class="totalprice-section">
+    <h3 id="total-price">Total Amount: 1000</h3>
   </div>
+  <div class="empty-all-button">
+    <button id="empty-all-button">Empty All</button>
+  </div>
+</div>
 
 
-    <script type="module" src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
