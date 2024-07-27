@@ -109,3 +109,16 @@ h1{
     }
 }
 
+/* styles.css */
+#dataContainer {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+#dataContainer.visible {
+    opacity: 1;
+    max-height: 100px; /* Adjust as needed */
+}
