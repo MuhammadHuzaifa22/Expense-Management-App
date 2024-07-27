@@ -1,11 +1,62 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#form{
-    width: 500px;
+#form {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  margin: auto;
+  border: 1px solid gray;
+  padding: 10px;
+  box-shadow: 2px 2px 4px black;
+  margin-top: 30px;
+}
+
+#form label {
+  font-size: 30px;
+  margin-bottom: -2%;
+}
+
+#form input {
+  height: 5vh;
+  font-size: 25px;
+  padding: 10px;
+  box-shadow: 2px 2px 3px gray;
+  border: 1px solid gainsboro;
+}
+
+#form-button {
+  font-size: 22px;
+  margin: auto;
+  padding: 10px;
+  border: none;
+  background: green;
+  color: white;
+  box-shadow: 0px 0px 3px black;
+}
+
+#form-button:hover {
+  box-shadow: 0px 0px 7px green;
+  transition: 0.6s ease;
+}
+
+#form h3 {
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  font-size: 60px;
+}
+
+@media (max-width: 520px) {
+  #form {
+    width: 400px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -15,110 +66,48 @@
     padding: 10px;
     box-shadow: 2px 2px 4px black;
     margin-top: 30px;
+    transition: 0.7s ease;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
 }
 
-#form label{
-    font-size: 30px;
-    margin-bottom: -2%;
-}
-
-#form input{
-    height: 5vh;
-    font-size: 25px;
-    padding: 10px;
-    box-shadow: 2px 2px 3px gray;
-    border: 1px solid gainsboro;
-}
-
-#form-button{
-    font-size: 22px;
+@media (max-width: 440px) {
+  #form {
+    width: 310px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
     margin: auto;
+    border: 1px solid gray;
     padding: 10px;
-    border: none;
-    background: green;
-    color:white;
-    box-shadow: 0px 0px 3px black;
+    box-shadow: 2px 2px 4px black;
+    margin-top: 30px;
+    transition: 0.7s ease;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
 }
 
-#form-button:hover{
-    box-shadow: 0px 0px 7px green;
-    transition: 0.6s ease;
+@media (max-width: 310px) {
+  #form {
+    width: 270px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    margin: auto;
+    border: 1px solid gray;
+    padding: 10px;
+    box-shadow: 2px 2px 4px black;
+    margin-top: 30px;
+    transition: 0.7s ease;
+  }
 }
 
-#form h3{
-    text-align: center;
-}
 
-h1{
-    text-align: center;font-size: 60px;
-}
-
-@media(max-width:520px){
-    #form{
-        width: 400px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        justify-content: center;
-        margin: auto;
-        border: 1px solid gray;
-        padding: 10px;
-        box-shadow: 2px 2px 4px black;
-        margin-top: 30px;
-        transition: 0.7s ease;
-    }
-
-    h1{
-        font-size: 40px;
-    }
-}
-
-@media(max-width:440px){
-    #form{
-        width: 310px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        justify-content: center;
-        margin: auto;
-        border: 1px solid gray;
-        padding: 10px;
-        box-shadow: 2px 2px 4px black;
-        margin-top: 30px;
-        transition: 0.7s ease;
-    }
-
-    h1{
-        font-size: 30px;
-    }
-}
-
-@media(max-width:310px){
-    #form{
-        width: 270px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        justify-content: center;
-        margin: auto;
-        border: 1px solid gray;
-        padding: 10px;
-        box-shadow: 2px 2px 4px black;
-        margin-top: 30px;
-        transition: 0.7s ease;
-    }
-}
-
-/* styles.css */
-#dataContainer {
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 1s ease-in-out, opacity 1s ease-in-out;
-}
-
-#dataContainer.visible {
-    opacity: 1;
-    max-height: 100px; /* Adjust as needed */
-}
