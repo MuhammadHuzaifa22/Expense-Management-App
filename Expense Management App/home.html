@@ -9,13 +9,15 @@
     <link rel="stylesheet" href="./Assets/expense-style.css" />
 
     <!-- ., Font Awesome Link -->
-    <script src="https://kit.fontawesome.com/0ae0890014.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/0ae0890014.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <div class="content container">
       <h1>Expense Management App</h1>
       <form id="expense-from">
-
         <input
           type="text"
           placeholder="Enter expense name eg: Institute Fees"
@@ -46,13 +48,19 @@
           <h4>Date & Time</h4>
           <ul id="ul-expense-date"></ul>
         </div>
+
+        <div class="expense-day">
+          <h4>Day</h4>
+          <ul id="ul-expense-day"></ul>
+        </div>
       </div>
       <div class="totalprice-section">
-        <h3 id="total-price">Total Expense: 1000</h3>
+        <h3 id="total-expense"></h3>
       </div>
       <div class="empty-all-button">
         <button id="empty-all-button">Empty All</button>
       </div>
+      
     </div>
     <div id="container"></div>
 
