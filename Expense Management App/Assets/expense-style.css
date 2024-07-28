@@ -390,9 +390,13 @@ navbar {
 .logo-section-home {
   margin-right: 10px;
   position: fixed;
-  box-shadow: 1px 1px 3px gray;
   padding: 3px;
   transition: 0.3s ease;
+}
+
+.logo-section-home:hover{
+  box-shadow: 1px 1px 3px gray;
+  transition: 0.2s ease;
 }
 
 .logo-section-home img {
@@ -401,7 +405,7 @@ navbar {
 
 .logo-section-home img:hover {
 box-shadow: 3px 3px 4px black;
-transition: 0.3s ease;
+transition: 0.2s ease;
 }
 
 .detail-list {
@@ -425,7 +429,7 @@ transition: 0.3s ease;
 
 .detail-listh3:hover {
   background: gainsboro;
-  transition: 0.3s ease;
+  transition: 0.2s ease;
   cursor: pointer;
 }
 
@@ -437,7 +441,7 @@ transition: 0.3s ease;
 
 .detail-listh4:hover {
   background: gainsboro;
-  transition: 0.3s ease;
+  transition: 0.2s ease;
   cursor: pointer;
 }
 

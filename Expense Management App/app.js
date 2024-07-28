@@ -16,6 +16,26 @@ let arr = [];
 let usersObjArr = [];
 let usersObj = JSON.parse(localStorage.getItem('user-with-email'));
 let registeredName = JSON.parse(localStorage.getItem('register-user-value'));
+let signedWithGoogleArr = [];
+let signedWithGoogle = JSON.parse(localStorage.getItem('user-with-google'));
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { auth } from "/config.js";
+
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/auth.user
+    const uid = user.uid;
+    console.log(uid);
+  } else {
+    window.location = 'index.html';
+
+  }
+});
+
+
+
 
 form.addEventListener('submit', event => {
   event.preventDefault();
@@ -88,7 +108,7 @@ function renderList() {
   for (let i = 0; i < totalArr.length; i++) {
     sum += totalArr[i];
   }
-
+  console.log(totalArr)
   arr.forEach((item, index) => {
     const typeLi = document.createElement('li');
     typeLi.style.display = 'flex';
@@ -165,12 +185,15 @@ function editExpense(index) {
           DateAndTime: new Date().toLocaleString(),
           Day: days[dateNumber]
         };
-
+       
         arr.splice(index, 1, updatedExpense);
         renderList();
+        
       } else {
         alert('Please enter *string*');
       }
+        console.log("🚀 ~ editExpense ~ totalArr:", totalArr)
+        console.log("🚀 ~ editExpense ~ totalArr:", totalArr)
     } else {
       alert('First letter should be *capital*');
     }
@@ -194,7 +217,8 @@ function editAmount(index) {
         alert('First number should not be *zero(0)*');
       } else {
         if (updatedExpenseAmount.length <= 8) {
-          totalArr.push(Number(updatedExpenseAmount));
+          totalArr.splice(index,1,Number(updatedExpenseAmount));
+          
           let updatedExpense = {
             Type: arr[index].Type,
             Amount: updatedExpenseAmount,
@@ -204,6 +228,7 @@ function editAmount(index) {
 
           arr.splice(index, 1, updatedExpense);
           renderList();
+        console.log(totalArr);
         } else {
           alert('You cannot enter an amount greater than *8* digits');
         }
@@ -244,69 +269,73 @@ if (usersObj) {
   usersObjArr.push(usersObj);
 }
 
-if (registeredName) {
-  for (let i = 0; i < usersObjArr.length; i++) {
-    detailList.innerHTML += `
+import { signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+signOutDetailButton.addEventListener('click', () => {
+  if (registeredName && !signedWithGoogle) {
+
+    for (let i = 0; i < usersObjArr.length; i++) {
+      detailList.innerHTML = `
       <h3 class="detail-listh3"><i class="fa-solid fa-file-signature"></i> ${registeredName}</h3>
       <h4 class="detail-listh4"><i class="fa-regular fa-envelope"></i>  ${usersObj.email}</h4>
       <button class="detail-list-button" id="signOutButton">Sign Out <i class="fa-solid fa-arrow-right-from-bracket"></i></button>`;
+    }
+  } else {
+    alert('You are not registered with eamil');
   }
-} else {
-  console.log('You are not registered with eamil');
-}
 
-// ., Sign Out Function
-import { signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-import { auth } from "/config.js"
-if(registeredName){
+  // ., Sign Out Function
+  if (registeredName) {
+    const signOutButton = document.getElementById('signOutButton');
+    console.log(`You are registered with email`);
 
-  const signOutButton = document.getElementById('signOutButton');
-  
-// Add an event listener to the button
-signOutButton.addEventListener('click', function () {
-  signOut(auth).then(() => {
-    alert(`Sign-out successful.`);
-    window.location = 'index.html';
-  }).catch((error) => {
-    console.log(error);
-    alert(error)
-  });
-});
+    // Add an event listener to the button
+    signOutButton.addEventListener('click', function () {
+      signOut(auth).then(() => {
+        alert(`Sign-out successful.`);
+        window.location = 'index.html';
+        localStorage.removeItem('register-user-value');
+        localStorage.removeItem('user-with-email');
+      }).catch((error) => {
+        console.log(error);
+        alert(error)
+      });
+    });
 
-}
+  }
+})
 
 // ., Resgiter With Google;
-let signedWithGoogleArr = [];
-let signedWithGoogle = JSON.parse(localStorage.getItem('user-with-google'));
-console.log(signedWithGoogle)
-console.log("🚀 ~ signedWithGoogle:", signedWithGoogle.photoURL)
-signedWithGoogleArr.push(signedWithGoogle);
- if(signedWithGoogle){
+if (signedWithGoogle && !registeredName) {
+  console.log(signedWithGoogle)
+  console.log("🚀 ~ signedWithGoogle:", signedWithGoogle.photoURL)
+  signedWithGoogleArr.push(signedWithGoogle);
   console.log(`You are registered with Google`);
-   if(signedWithGoogle.photoURL){
-     signOutDetailButton.src = `${signedWithGoogle.photoURL}`
-  signOutDetailButton.addEventListener('click',()=>{
+  if (signedWithGoogle.photoURL) {
+    signOutDetailButton.src = `${signedWithGoogle.photoURL}`
+    signOutDetailButton.addEventListener('click', () => {
 
-    for (let j = 0; j < signedWithGoogleArr.length; j++) {
-      detailList.innerHTML = `
+      for (let j = 0; j < signedWithGoogleArr.length; j++) {
+        detailList.innerHTML = `
           <h3 class="detail-listh3"><i class="fa-solid fa-file-signature"></i> ${signedWithGoogle.displayName}</h3>
           <h4 class="detail-listh4"><i class="fa-regular fa-envelope"></i> ${signedWithGoogle.email}</h4>
           <h5 class="detail-listh4"><i class="fa-solid fa-id-card"></i> User Id: ${signedWithGoogle.providerData[0].uid}</h5>
           <button class="detail-list-button" id="signOutButton">Sign Out <i class="fa-solid fa-arrow-right-from-bracket"></i></button>`;
       }
-      
+
       const signOutButton = document.getElementById('signOutButton');
-      
+
       // Add an event listener to the button
       signOutButton.addEventListener('click', function () {
         signOut(auth).then(() => {
           alert(`Sign-out successful.`);
+          localStorage.removeItem('user-with-google');
           window.location = 'index.html';
         }).catch((error) => {
           console.log(error);
           alert(error)
-        })    
-  });
-});
-   }
+        })
+      });
+    });
   }
+}
+
