@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Management App</title>
+
+    <!-- ., CSS Link -->
+    <link rel="stylesheet" href="./Assets/expense-style.css" />
+
+    <!-- ., Font Awesome Link -->
+    <script
+      src="https://kit.fontawesome.com/0ae0890014.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+<navbar>
+  <div class="logo-section-home">
+    <img src="./Assets/Images/sign-out-image.png" alt="sign-out-image" id="sign-out-detail-button">
+    <div class="detail-list">
+
+    </div>
+  </div>
+</navbar>
+
+    <div class="content container">
+      <h1>Expense Management App</h1>
+      <form id="expense-from">
+        <input
+          type="text"
+          placeholder="Enter expense name eg: Institute Fees"
+          id="expense-type"
+        />
+        <input
+          type="number"
+          placeholder="Enter expense amount eg: 1000"
+          id="expense"
+        />
+        <button class"add-item-button">Add item</button>
+      </form>
+    </div>
+    <p id="output"></p>
+
+    <div class="list-section">
+      <div class="list-navbar-section">
+        <div class="expense-type">
+          <h4>Expense</h4>
+          <ul id="ul-expense-type"></ul>
+          
+        </div>
+        <div class="expense-amount">
+          <h4>Amount</h4>
+          <ul id="ul-expense-amount"></ul>
+        </div>
+
+        <div class="expense-date">
+          <h4>Date & Time</h4>
+          <ul id="ul-expense-date"></ul>
+        </div>
+
+        <div class="expense-day">
+          <h4>Day</h4>
+          <ul id="ul-expense-day"></ul>
+        </div>
+      </div>
+      <div class="totalprice-section">
+        <h3 id="total-expense"></h3>
+      </div>
+      <div class="empty-all-button">
+        <button id="deleteAllButton" >Delete All <i class="fa-solid fa-trash-can"></i></button>
+      </div>
+
+    </div>
+    <div id="container"></div>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
