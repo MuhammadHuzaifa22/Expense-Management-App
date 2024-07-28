@@ -15,6 +15,15 @@
     ></script>
   </head>
   <body>
+<navbar>
+  <div class="logo-section-home">
+    <img src="./Assets/Images/sign-out-image.png" alt="sign-out-image" id="sign-out-detail-button">
+    <div class="detail-list">
+
+    </div>
+  </div>
+</navbar>
+
     <div class="content container">
       <h1>Expense Management App</h1>
       <form id="expense-from">
@@ -28,7 +37,7 @@
           placeholder="Enter expense amount eg: 1000"
           id="expense"
         />
-        <button>Add item</button>
+        <button class"add-item-button">Add item</button>
       </form>
     </div>
     <p id="output"></p>
@@ -38,6 +47,7 @@
         <div class="expense-type">
           <h4>Expense</h4>
           <ul id="ul-expense-type"></ul>
+          
         </div>
         <div class="expense-amount">
           <h4>Amount</h4>
@@ -58,12 +68,12 @@
         <h3 id="total-expense"></h3>
       </div>
       <div class="empty-all-button">
-        <button id="empty-all-button">Empty All</button>
+        <button id="deleteAllButton" >Delete All <i class="fa-solid fa-trash-can"></i></button>
       </div>
-      
+
     </div>
     <div id="container"></div>
 
-    <script src="app.js"></script>
+    <script src="./app.js" type="module"></script>
   </body>
 </html>

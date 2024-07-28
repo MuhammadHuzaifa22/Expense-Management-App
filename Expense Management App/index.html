@@ -3,24 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Login</title>
 
     <!-- ., CSS Link -->
     <link rel="stylesheet" href="./Assets/style.css">
-
+    
 </head>
 <body>
-    
-<h1>Regitser</h1>
+
+<h1>Login</h1>
 <form id="form">
 <label>Email</label>
 <input type="email" placeholder="Email" id="email">
 <label>Passowrd</label>
 <input type="password" placeholder="Password" id="password">
-<button type="submit" id="form-button">Register</button>
-<h3>Already have an account? <a href="login.html">Login</a></h3>
+<button type="submit" id="form-button">Log in</button>
+<h3>Not a member? <a href="register.html">Register</a></h3>
 </form>
+<h4 style="text-align: center;font-weight: normal;margin-top: 10px;">OR</h4>
+<div class="google-button">
+    <img src="./Assets/Images/Google Logo.png" alt="">
+    <button type="submit" id="google-button"> Sign in with google</button>
+</div>
 
-<script type="module" src="register.js"></script>
+<script type="module" src="login.js"></script>
 </body>
 </html>

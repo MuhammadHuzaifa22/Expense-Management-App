@@ -7,72 +7,71 @@ const ulExpenseDate = document.getElementById('ul-expense-date');
 const ulExpenseAmount = document.getElementById('ul-expense-amount');
 const ulExpenseDay = document.getElementById('ul-expense-day');
 let totalExpense = document.getElementById('total-expense');
+const detailList = document.querySelector('.detail-list');
+const deleteAllButton = document.getElementById('deleteAllButton');
+const logoSectionHome = document.querySelector('.logo-section-home');
+const signOutDetailButton = document.getElementById('sign-out-detail-button');
 let totalArr = [];
 let arr = [];
-
+// console.log("🚀 ~ detailList:", detailList);
 form.addEventListener('submit', event => {
   event.preventDefault();
 
   if ((expenseType.value === '' || expenseType.value === null) && expenseAmount.value === '' || expenseAmount.value === null) {
-    alert(`Please fill input fields`);
+    alert('Please fill input fields');
   } else if (typeof (expenseType.value) === 'Number') {
-    alert(`Please enter *type* not number`);
-  }
-  else if ((expenseType.value === '' || expenseType.value === null) && (expenseAmount.value !== '' || expenseAmount.value !== null)) {
-    alert(`Please enter *expense type*`);
+    alert('Please enter *type* not number');
+  } else if ((expenseType.value === '' || expenseType.value === null) && (expenseAmount.value !== '' || expenseAmount.value !== null)) {
+    alert('Please enter *expense type*');
   } else if ((expenseAmount.value === '' || expenseAmount.value === null) && (expenseType.value !== '' || expenseType.value !== null)) {
-    alert(`Please enter *expense amount*`);
+    alert('Please enter *expense amount*');
   } else {
     if (isNaN(expenseType.value)) {
       if (expenseType.value.length > 10) {
-        alert(`Maximun length of *expense* is 10`);
+        alert('Maximum length of *expense* is 10');
       } else {
         if (expenseAmount.value.length >= 8) {
-          alert(`Maximum length  of *amount* is  8`)
+          alert('Maximum length of *amount* is 8');
         } else {
           let startFrom0 = expenseAmount.value.split('');
-          console.log("🚀 ~ startFrom0:", startFrom0[0]);
           if (startFrom0[0] == '0') {
-            alert(`Amount should not starts with *0*`)
+            alert('Amount should not start with *0*');
           } else {
-            alert(`Expense added`);
-            let now = new Date();
-            let formattedDateTime = now.toLocaleString();
+            let startCapitalLetter = expenseType.value.split('');
+            if (startCapitalLetter[0] === startCapitalLetter[0].toUpperCase()) {
+              alert('Expense added');
+              let now = new Date();
+              let formattedDateTime = now.toLocaleString();
 
-            let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            let daysDate = new Date();
-            let dateNumber = daysDate.getDay();
+              let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+              let daysDate = new Date();
+              let dateNumber = daysDate.getDay();
+              let dayName = days[dateNumber];
 
-            let dayName = days[dateNumber];
-            console.log("🚀 ~ dayName:", dayName);
+              let obj = {
+                Type: expenseType.value,
+                Amount: parseFloat(expenseAmount.value),
+                DateAndTime: formattedDateTime,
+                Day: dayName
+              };
+              totalArr.push(obj.Amount);
 
-            let obj = {
-              Type: `${expenseType.value}`,
-              Amount: parseFloat(expenseAmount.value),
-              DateAndTime: `${formattedDateTime}`,
-              Day: dayName
+              listSection.style.display = 'block';
+              listSection.style.transition = '0.6s ease-in';
+              arr.push(obj);
+              renderList();
+            } else {
+              alert('First letter should be in *capital* form');
             }
-            totalArr.push(obj.Amount);
-
-            listSection.style.display = 'block';
-            listSection.style.transition = '0.6s ease in';
-            arr.push(obj);
-            console.log(arr)
-            console.log(expenseType.value);
-            console.log(expenseAmount.value)
-            console.log("🚀 ~ arr:", arr);
-            renderList();
           }
         }
       }
     } else {
       expenseType.value = '';
-      alert(`Please enter *expense type* in string eg: Fees of institute`);
+      alert('Please enter *expense type* in string e.g., Fees of institute');
     }
-
   }
-})
-
+});
 
 function renderList() {
   ulExpenseType.innerHTML = '';
@@ -87,19 +86,64 @@ function renderList() {
     sum += totalArr[i];
   }
 
-  console.log("The sum of the numbers is: " + sum);
-  
+  arr.forEach((item, index) => {
+    const typeLi = document.createElement('li');
+    typeLi.style.display = 'flex';
+    typeLi.style.gap = '10px';
+    typeLi.style.alignItems = 'center';
 
-  console.log(totalArr);
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'deleteButton';
+    deleteButton.innerHTML = 'Delete <i class="fa-solid fa-trash"></i>';
+    deleteButton.addEventListener('click', () => deleteExpense(index));
 
-  arr.map((item, index) => {
-    ulExpenseType.innerHTML += `<li>${item.Type} <button class="editBut"  onclick="editExpense(${index})">Edit <i class="fa-solid fa-pen-to-square"></i></button></li>`;
-    ulExpenseAmount.innerHTML += `<li class="expense-amount">${item.Amount}  <button class="editBut" onclick="editAmount(${index})">Edit <i class="fa-solid fa-pen-to-square"></i></button></li>`;
-    ulExpenseDate.innerHTML += `<li style="margin-top:7px" >${item.DateAndTime}</li>`;
-    ulExpenseDay.innerHTML += `<li style="margin-top:7px">${item.Day}</li>`
-    totalExpense.innerHTML = `Total Expense: ${sum}`
+    const typeText = document.createTextNode(item.Type);
+
+    const editTypeButton = document.createElement('button');
+    editTypeButton.className = 'editBut';
+    editTypeButton.innerHTML = 'Edit <i class="fa-solid fa-pen-to-square"></i>';
+    editTypeButton.addEventListener('click', () => editExpense(index));
+
+    typeLi.appendChild(deleteButton);
+    typeLi.appendChild(typeText);
+    typeLi.appendChild(editTypeButton);
+    ulExpenseType.appendChild(typeLi);
+
+    const amountLi = document.createElement('li');
+    amountLi.className = 'expense-amount';
+    amountLi.innerHTML = `${item.Amount} `;
+
+    const editAmountButton = document.createElement('button');
+    editAmountButton.className = 'editBut';
+    editAmountButton.innerHTML = 'Edit <i class="fa-solid fa-pen-to-square"></i>';
+    editAmountButton.addEventListener('click', () => editAmount(index));
+
+    amountLi.appendChild(editAmountButton);
+    ulExpenseAmount.appendChild(amountLi);
+
+    const dateLi = document.createElement('li');
+    dateLi.style.marginTop = '7px';
+    dateLi.textContent = item.DateAndTime;
+    ulExpenseDate.appendChild(dateLi);
+
+    const dayLi = document.createElement('li');
+    dayLi.style.marginTop = '7px';
+    dayLi.textContent = item.Day;
+    ulExpenseDay.appendChild(dayLi);
   });
 
+  totalExpense.innerHTML = `Total Expense: ${sum}`;
+}
+
+function deleteExpense(index) {
+  arr.splice(index, 1);
+  totalArr.splice(index, 1);
+  if (totalArr.length === 0) {
+    listSection.style.display = 'none';
+  } else {
+    listSection.style.display = 'block';
+  }
+  renderList();
 }
 
 function editExpense(index) {
@@ -108,64 +152,121 @@ function editExpense(index) {
   let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   let daysDate = new Date();
   let dateNumber = daysDate.getDay();
-if(updateExpenseType !== null && updateExpenseType !== ''){
+  if (updateExpenseType !== null && updateExpenseType !== '') {
+    let firstWordCapitalCheck = updateExpenseType.split('');
+    if (firstWordCapitalCheck[0] === firstWordCapitalCheck[0].toUpperCase()) {
+      if (isNaN(updateExpenseType)) {
+        let updatedExpense = {
+          Type: updateExpenseType,
+          Amount: arr[index].Amount,
+          DateAndTime: new Date().toLocaleString(),
+          Day: days[dateNumber]
+        };
 
-  if (isNaN(updateExpenseType)) {
-    let updatedExpense = {
-      Type: updateExpenseType,
-      Amount: arr[index].Amount,
-      DateAndTime: new Date().toLocaleString(),
-      Day: days[dateNumber]
+        arr.splice(index, 1, updatedExpense);
+        renderList();
+      } else {
+        alert('Please enter *string*');
+      }
+    } else {
+      alert('First letter should be *capital*');
     }
-
-    arr.splice(index, 1, updatedExpense)
-    renderList();
-
   } else {
-    alert(`Please enter *string*`)
+    alert('Please re-enter expense');
   }
-}else{
-  alert(`Please re enter expense`);
-}
 }
 
 function editAmount(index) {
-  let updatedExpenseAmount = prompt(`Enter new expense amount`);
+  let updatedExpenseAmount = prompt('Enter new expense amount');
 
-  
   let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   let daysDate = new Date();
   let dateNumber = daysDate.getDay();
-if(updatedExpenseAmount !== null && updatedExpenseAmount !== ''){
-
-  if (isNaN(updatedExpenseAmount)) {
-    alert(`Please enter *number*`);
-  } else {
-    let checkZero = updatedExpenseAmount.split('');
-    console.log("🚀 ~ editAmount ~ checkZero:", checkZero)
-    if(checkZero[0] === '0'){
-      alert(`First number should not be *zero(0)*`)
-    }else{
-
-      
-      totalArr.push(Number(updatedExpenseAmount))
-    if (updatedExpenseAmount.length <= 8) {
-      let updatedExpense = {
-        Type: arr[index].Type,
-        Amount: updatedExpenseAmount,
-        DateAndTime: new Date().toLocaleString(),
-        Day: days[dateNumber]
-      }
-
-      arr.splice(index, 1, updatedExpense);
-      renderList();
-
+  if (updatedExpenseAmount !== null && updatedExpenseAmount !== '') {
+    if (isNaN(updatedExpenseAmount)) {
+      alert('Please enter *number*');
     } else {
-      alert(`You cannot enter amount which is greater than *8* digits`)
+      let checkZero = updatedExpenseAmount.split('');
+      if (checkZero[0] === '0') {
+        alert('First number should not be *zero(0)*');
+      } else {
+        if (updatedExpenseAmount.length <= 8) {
+          totalArr.push(Number(updatedExpenseAmount));
+          let updatedExpense = {
+            Type: arr[index].Type,
+            Amount: updatedExpenseAmount,
+            DateAndTime: new Date().toLocaleString(),
+            Day: days[dateNumber]
+          };
+
+          arr.splice(index, 1, updatedExpense);
+          renderList();
+        } else {
+          alert('You cannot enter an amount greater than *8* digits');
+        }
+      }
     }
+  } else {
+    alert('Please re-enter amount');
   }
+}
+
+// Function to delete all expenses
+function deleteAll() {
+  ulExpenseType.innerHTML = '';
+  ulExpenseAmount.innerHTML = '';
+  ulExpenseDate.innerHTML = '';
+  ulExpenseDay.innerHTML = '';
+  totalExpense.innerHTML = 'Total Expense: 0';
+  arr.splice(0, arr.length);
+  totalArr.splice(0, totalArr.length);
+  setTimeout(() => {
+    listSection.style.display = 'none';
+  }, 1000);
+}
+
+// Attach event listener to delete all button
+deleteAllButton.addEventListener('click', deleteAll);
+
+signOutDetailButton.addEventListener('click', () => {
+  if (detailList.style.display === 'block') {
+    detailList.style.display = 'none';
+  } else {
+    detailList.style.display = 'block';
   }
-}else{
-  alert(`Please re enter amount`);
+})
+
+let usersObjArr = [];
+let usersObj = JSON.parse(localStorage.getItem('user-with-email'));
+if (usersObj) {
+  usersObjArr.push(usersObj);
 }
+
+let registeredName = JSON.parse(localStorage.getItem('register-user-value'));
+if (registeredName) {
+  for (let i = 0; i < usersObjArr.length; i++) {
+    detailList.innerHTML += `
+      <h3 class="detail-listh3"><i class="fa-solid fa-file-signature"></i> ${registeredName}</h3>
+      <h4 class="detail-listh4"><i class="fa-regular fa-envelope"></i>  ${usersObj.email}</h4>
+      <button class="detail-list-button" id="signOutButton">Sign Out <i class="fa-solid fa-arrow-right-from-bracket"></i></button>`;
+  }
+} else {
+  console.log('Register username does not exists');
 }
+
+// ., Sign Out Function
+import { signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { auth } from "/config.js"
+
+const signOutButton = document.getElementById('signOutButton');
+
+// Add an event listener to the button
+signOutButton.addEventListener('click', function () {
+  signOut(auth).then(() => {
+    alert(`Sign-out successful.`);
+
+  }).catch((error) => {
+    console.log(error);
+    alert(error)
+  });
+});

@@ -16,7 +16,8 @@ body {
 h1 {
   text-align: center;
   margin-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
+  margin-top: 150px;
 }
 
 #expense-from {
@@ -272,20 +273,34 @@ h1 {
 .list-section {
   width: auto;
   padding: 5px;
-  margin:0px 15px;
+  margin: 0px 15px;
   /* margin: auto; */
   margin-top: 30px;
   transition: 0.6s ease-in;
-  box-shadow: 5px 5px  gray;
+  box-shadow: 5px 5px gray;
   display: none;
 }
 
 .list-navbar-section {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
   padding: 5px 10px;
-  margin: 2px 9px;
+  margin: 9px 9px;
   box-shadow: 1px 1px 4px black;
+}
+
+@media (max-width: 388px) {
+  .list-navbar-section {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 5px 5px;
+    margin: 5px 5px;
+    box-shadow: 1px 1px 4px black;
+  }
 }
 
 .list-navbar-section h4 {
@@ -316,26 +331,133 @@ ul li {
 }
 
 .empty-all-button button {
-  font-size: 18px;
-  padding: 5px;
-  background: #000;
+  background-color: red;
   color: white;
-  box-shadow: 0px 0px 4px gray;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
 .empty-all-button button:hover {
-  font-size: 20px;
-  padding: 3px;
+  background-color: darkred;
+}
+
+.editBut {
+  padding: 5px;
+  margin-top: 2px;
   background: #000;
   color: white;
-  box-shadow: 0px 0px 10px gainsboro;
-  transition: 0.6s ease;
 }
 
-.editBut{
-    padding: 5px;
-    margin-top: 2px;
-    background: #000;
-    color: white;
+.editBut:hover {
+  padding: 5px;
+  margin-top: 2px;
+  background: #000;
+  color: white;
+  box-shadow: 1px 1px 1px black;
+  transition: 0.5s ease;
 }
 
+.expense-type h4 {
+  margin-left: 75px;
+}
+
+.deleteButton {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.deleteButton:hover {
+  background-color: darkred;
+}
+
+/* ., Navbar Section */
+navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  text-align: center;
+  padding: 10px;
+}
+
+.logo-section-home {
+  margin-right: 10px;
+  position: fixed;
+  box-shadow: 1px 1px 3px gray;
+  padding: 3px;
+  transition: 0.3s ease;
+}
+
+.logo-section-home img {
+  height: 55px;
+}
+
+.logo-section-home img:hover {
+box-shadow: 3px 3px 4px black;
+transition: 0.3s ease;
+}
+
+.detail-list {
+  display: none;
+  transition: 0.3s ease;
+  width: auto;
+  padding: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.detail-listh3 {
+  font-size: 22px;
+  font-weight: bolder;
+  margin-top: 3px;
+  transition: 0.3s ease;
+}
+
+.detail-listh3:hover {
+  background: gainsboro;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.detail-listh4 {
+  font-size: 20px;
+  font-weight: normal;
+  margin-top: 3px;
+}
+
+.detail-listh4:hover {
+  background: gainsboro;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.detail-list-button {
+  padding: 5px;
+  background: #000;
+  margin-top: 3px;
+  width: 100%;
+  color: white;
+  border: 4px solid black;
+}
+
+.detail-list-button:active{
+  border: 6px solid white;
+}
+
+.detail-list-button:hover{
+  background: white;
+  color: black;
+  border: 1px solid black;
+  transition: 0.2s ease;
+  font-weight: bolder;
+}
