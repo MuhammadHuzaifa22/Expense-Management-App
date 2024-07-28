@@ -39,7 +39,7 @@ googleButton.addEventListener('click', () => {
       const user = result.user;
       console.log(user);
       localStorage.setItem('user-with-google',JSON.stringify(user));
-      // window.location = 'home.html'
+      window.location = 'home.html'
 
     }).catch((error) => {
       const errorMessage = error.message;

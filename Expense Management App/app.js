@@ -13,7 +13,10 @@ const logoSectionHome = document.querySelector('.logo-section-home');
 const signOutDetailButton = document.getElementById('sign-out-detail-button');
 let totalArr = [];
 let arr = [];
-// console.log("🚀 ~ detailList:", detailList);
+let usersObjArr = [];
+let usersObj = JSON.parse(localStorage.getItem('user-with-email'));
+let registeredName = JSON.parse(localStorage.getItem('register-user-value'));
+
 form.addEventListener('submit', event => {
   event.preventDefault();
 
@@ -236,13 +239,11 @@ signOutDetailButton.addEventListener('click', () => {
   }
 })
 
-let usersObjArr = [];
-let usersObj = JSON.parse(localStorage.getItem('user-with-email'));
+// ., Sing Out With Email
 if (usersObj) {
   usersObjArr.push(usersObj);
 }
 
-let registeredName = JSON.parse(localStorage.getItem('register-user-value'));
 if (registeredName) {
   for (let i = 0; i < usersObjArr.length; i++) {
     detailList.innerHTML += `
@@ -251,22 +252,61 @@ if (registeredName) {
       <button class="detail-list-button" id="signOutButton">Sign Out <i class="fa-solid fa-arrow-right-from-bracket"></i></button>`;
   }
 } else {
-  console.log('Register username does not exists');
+  console.log('You are not registered with eamil');
 }
 
 // ., Sign Out Function
 import { signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 import { auth } from "/config.js"
+if(registeredName){
 
-const signOutButton = document.getElementById('signOutButton');
-
+  const signOutButton = document.getElementById('signOutButton');
+  
 // Add an event listener to the button
 signOutButton.addEventListener('click', function () {
   signOut(auth).then(() => {
     alert(`Sign-out successful.`);
-
+    window.location = 'index.html';
   }).catch((error) => {
     console.log(error);
     alert(error)
   });
 });
+
+}
+
+// ., Resgiter With Google;
+let signedWithGoogleArr = [];
+let signedWithGoogle = JSON.parse(localStorage.getItem('user-with-google'));
+console.log(signedWithGoogle)
+console.log("🚀 ~ signedWithGoogle:", signedWithGoogle.photoURL)
+signedWithGoogleArr.push(signedWithGoogle);
+ if(signedWithGoogle){
+  console.log(`You are registered with Google`);
+   if(signedWithGoogle.photoURL){
+     signOutDetailButton.src = `${signedWithGoogle.photoURL}`
+  signOutDetailButton.addEventListener('click',()=>{
+
+    for (let j = 0; j < signedWithGoogleArr.length; j++) {
+      detailList.innerHTML = `
+          <h3 class="detail-listh3"><i class="fa-solid fa-file-signature"></i> ${signedWithGoogle.displayName}</h3>
+          <h4 class="detail-listh4"><i class="fa-regular fa-envelope"></i> ${signedWithGoogle.email}</h4>
+          <h5 class="detail-listh4"><i class="fa-solid fa-id-card"></i> User Id: ${signedWithGoogle.providerData[0].uid}</h5>
+          <button class="detail-list-button" id="signOutButton">Sign Out <i class="fa-solid fa-arrow-right-from-bracket"></i></button>`;
+      }
+      
+      const signOutButton = document.getElementById('signOutButton');
+      
+      // Add an event listener to the button
+      signOutButton.addEventListener('click', function () {
+        signOut(auth).then(() => {
+          alert(`Sign-out successful.`);
+          window.location = 'index.html';
+        }).catch((error) => {
+          console.log(error);
+          alert(error)
+        })    
+  });
+});
+   }
+  }
