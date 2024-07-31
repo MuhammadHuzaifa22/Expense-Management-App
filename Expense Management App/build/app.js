@@ -156,6 +156,8 @@ function renderList() {
   });
 
   totalExpense.innerHTML = `Total Expense: ${sum}`;
+  expenseType.value = '';
+  expenseAmount.value = '';
 }
 
 function deleteExpense(index) {
@@ -185,15 +187,15 @@ function editExpense(index) {
           DateAndTime: new Date().toLocaleString(),
           Day: days[dateNumber]
         };
-       
+
         arr.splice(index, 1, updatedExpense);
         renderList();
-        
+
       } else {
         alert('Please enter *string*');
       }
-        console.log("🚀 ~ editExpense ~ totalArr:", totalArr)
-        console.log("🚀 ~ editExpense ~ totalArr:", totalArr)
+      console.log("🚀 ~ editExpense ~ totalArr:", totalArr)
+      console.log("🚀 ~ editExpense ~ totalArr:", totalArr)
     } else {
       alert('First letter should be *capital*');
     }
@@ -217,8 +219,8 @@ function editAmount(index) {
         alert('First number should not be *zero(0)*');
       } else {
         if (updatedExpenseAmount.length <= 8) {
-          totalArr.splice(index,1,Number(updatedExpenseAmount));
-          
+          totalArr.splice(index, 1, Number(updatedExpenseAmount));
+
           let updatedExpense = {
             Type: arr[index].Type,
             Amount: updatedExpenseAmount,
@@ -228,7 +230,7 @@ function editAmount(index) {
 
           arr.splice(index, 1, updatedExpense);
           renderList();
-        console.log(totalArr);
+          console.log(totalArr);
         } else {
           alert('You cannot enter an amount greater than *8* digits');
         }
@@ -307,7 +309,6 @@ signOutDetailButton.addEventListener('click', () => {
 // ., Resgiter With Google;
 if (signedWithGoogle && !registeredName) {
   console.log(signedWithGoogle)
-  console.log("🚀 ~ signedWithGoogle:", signedWithGoogle.photoURL)
   signedWithGoogleArr.push(signedWithGoogle);
   console.log(`You are registered with Google`);
   if (signedWithGoogle.photoURL) {
@@ -339,3 +340,17 @@ if (signedWithGoogle && !registeredName) {
   }
 }
 
+const daysOfWeek = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+const todayDate = new Date();
+const dayExecuter = todayDate.getDay() + 1;
+console.log("🚀 ~ dayExecuter:", dayExecuter)
+let tdayDateIndex = daysOfWeek[dayExecuter];
+console.log("🚀 ~ tdayDateIndex:", tdayDateIndex);
+const newDateDay = new Date().getDay();
+console.log("🚀 ~ newDateDay:", daysOfWeek[newDateDay])
+
+// if(daysOfWeek[dayExecuter+2]){
+  // localStorage.setItem('newDayArr',JSON.stringify(arr));
+  // console.log(daysOfWeek[dayExecuter],'sdsd');
+  // console.log('as')
+// }

@@ -24,8 +24,6 @@ import { auth } from "/config.js";
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/auth.user
     const uid = user.uid;
     console.log(uid);
   } else {
@@ -83,6 +81,100 @@ form.addEventListener('submit', event => {
               listSection.style.transition = '0.6s ease-in';
               arr.push(obj);
               renderList();
+
+              // ., Recent page section started
+              const daysOfWeek = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+              const todayDate = new Date();
+              const dayExecuter = todayDate.getDay();
+              // let tdayDateIndex = daysOfWeek[dayExecuter];
+              // const newDateDay = new Date().getDay();
+              if (daysOfWeek[dayExecuter] === daysOfWeek[0]) {
+                let setArr = [];
+                let setObj = {
+                  expenseAmount: expenseAmount.value,
+                  expenseType: expenseType.value
+                }
+                setArr.push(setObj);
+                console.log(setArr);
+
+                console.log(`${daysOfWeek[0]} Expnese :`)
+              }
+
+
+              if (daysOfWeek[dayExecuter] === daysOfWeek[1]) {
+                let sunArr = [];
+                let sunObj = {
+                  expenseAmount: expenseAmount.value,
+                  expenseType: expenseType.value
+                }
+                sunArr.push(sunObj);
+                console.log(sunArr);
+
+                console.log(`${daysOfWeek[1]} Expnese :`)
+              }
+
+              if (daysOfWeek[dayExecuter] === daysOfWeek[2]) {
+                let monArr = [];
+                let monObj = {
+                  expenseAmount: expenseAmount.value,
+                  expenseType: expenseType.value
+                }
+                monArr.push(monObj);
+                console.log(monArr);
+          
+                console.log(`${daysOfWeek[2]} Expnese :`)
+              }
+
+              if (daysOfWeek[dayExecuter] === daysOfWeek[3]) {
+                let tueArr = [];
+                let tueObj = {
+                  expenseAmount: expenseAmount.value,
+                  expenseType: expenseType.value
+                }
+                tueArr.push(tueObj);
+                console.log(tueArr);
+
+                console.log(`${daysOfWeek[3]} Expnese :`)
+              }
+
+              if (daysOfWeek[dayExecuter] === daysOfWeek[4]) {
+                let wedArr = [];
+                let wedObj = {
+                  expenseAmount: expenseAmount.value,
+                  expenseType: expenseType.value
+                }
+                wedArr.push(wedObj);
+                console.log(wedArr);
+
+                console.log(`${daysOfWeek[4]} Expnese :`)
+              }
+
+              if (daysOfWeek[dayExecuter] === daysOfWeek[5]) {
+                let thursArr = [];
+                let thursObj = {
+                  expenseAmount: expenseAmount.value,
+                  expenseType: expenseType.value
+                }
+                thursArr.push(thursObj);
+                console.log(thursArr);
+
+                console.log(`${daysOfWeek[5]} Expnese :`)
+              }
+
+              if (daysOfWeek[dayExecuter] === daysOfWeek[6]) {
+                let friArr = [];
+                let friObj = {
+                  expenseAmount: expenseAmount.value,
+                  expenseType: expenseType.value
+                }
+                friArr.push(friObj);
+                console.log(friArr);
+
+                console.log(`${daysOfWeek[6]} Expnese :`)
+              }
+              // ., Recent page section ended
+
+
             } else {
               alert('First letter should be in *capital* form');
             }
@@ -108,7 +200,7 @@ function renderList() {
   for (let i = 0; i < totalArr.length; i++) {
     sum += totalArr[i];
   }
-  console.log(totalArr)
+
   arr.forEach((item, index) => {
     const typeLi = document.createElement('li');
     typeLi.style.display = 'flex';
@@ -156,6 +248,8 @@ function renderList() {
   });
 
   totalExpense.innerHTML = `Total Expense: ${sum}`;
+  expenseType.value = '';
+  expenseAmount.value = '';
 }
 
 function deleteExpense(index) {
@@ -185,15 +279,13 @@ function editExpense(index) {
           DateAndTime: new Date().toLocaleString(),
           Day: days[dateNumber]
         };
-       
+
         arr.splice(index, 1, updatedExpense);
         renderList();
-        
+
       } else {
         alert('Please enter *string*');
       }
-        console.log("🚀 ~ editExpense ~ totalArr:", totalArr)
-        console.log("🚀 ~ editExpense ~ totalArr:", totalArr)
     } else {
       alert('First letter should be *capital*');
     }
@@ -217,8 +309,8 @@ function editAmount(index) {
         alert('First number should not be *zero(0)*');
       } else {
         if (updatedExpenseAmount.length <= 8) {
-          totalArr.splice(index,1,Number(updatedExpenseAmount));
-          
+          totalArr.splice(index, 1, Number(updatedExpenseAmount));
+
           let updatedExpense = {
             Type: arr[index].Type,
             Amount: updatedExpenseAmount,
@@ -228,7 +320,7 @@ function editAmount(index) {
 
           arr.splice(index, 1, updatedExpense);
           renderList();
-        console.log(totalArr);
+          console.log(totalArr);
         } else {
           alert('You cannot enter an amount greater than *8* digits');
         }
@@ -307,7 +399,6 @@ signOutDetailButton.addEventListener('click', () => {
 // ., Resgiter With Google;
 if (signedWithGoogle && !registeredName) {
   console.log(signedWithGoogle)
-  console.log("🚀 ~ signedWithGoogle:", signedWithGoogle.photoURL)
   signedWithGoogleArr.push(signedWithGoogle);
   console.log(`You are registered with Google`);
   if (signedWithGoogle.photoURL) {

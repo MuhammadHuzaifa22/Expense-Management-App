@@ -16,6 +16,13 @@
   box-shadow: 2px 2px 4px black;
   margin-top: 30px;
 }
+body {
+  background-image: url('./Images/images (1).jpeg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  min-height: 100vh; /* Ensures the body takes at least the full viewport height */
+}
 
 #form label {
   font-size: 30px;
@@ -126,11 +133,6 @@ h1 {
   }
 }
 
-/* .google-button{
-  display: flex;
-  margin-top: 20px;
-  justify-content: center;
-} */
 
 .google-button{
   display: flex;
@@ -164,5 +166,6 @@ h1 {
   color: blue;
   transition: 0.5s ease;
 }
+
 
 

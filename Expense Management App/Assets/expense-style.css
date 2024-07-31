@@ -6,6 +6,10 @@
 
 body {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  background-image: url('./Images/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm00MjgtMDAzMC1qb2I1OTguanBn.webp');
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
 }
 
 .content container {
@@ -274,7 +278,6 @@ h1 {
   width: auto;
   padding: 5px;
   margin: 0px 15px;
-  /* margin: auto; */
   margin-top: 30px;
   transition: 0.6s ease-in;
   box-shadow: 3px 3px 5px black;
@@ -310,7 +313,7 @@ h1 {
 
 .list-navbar-section ul li {
   font-size: 20px;
-  transition: 0.6s ease;
+  
 }
 
 .totalprice-section {
@@ -319,6 +322,8 @@ h1 {
   text-align: center;
   font-size: 23px;
 }
+
+
 
 ul li {
   list-style: none;
@@ -465,4 +470,13 @@ transition: 0.2s ease;
   border: 1px solid black;
   transition: 0.2s ease;
   font-weight: bolder;
+}
+
+#total-expense:hover{
+  text-shadow: 0px 0px 2px black;
+  cursor: pointer;
+}
+
+.edBut{
+  background: red;
 }

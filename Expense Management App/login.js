@@ -47,3 +47,6 @@ googleButton.addEventListener('click', () => {
       alert(`${errorMessage}`);
     });
 })
+
+
+// Import the functions you need from the SDKs you need
