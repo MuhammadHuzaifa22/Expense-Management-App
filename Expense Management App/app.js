@@ -1,3 +1,9 @@
+// ., Import signOut , onAuthStateChanged and auth 
+import { signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { auth } from "/config.js";
+
+// ., Declare variables
 const listSection = document.querySelector('.list-section');
 const form = document.getElementById('expense-from');
 const expenseType = document.getElementById('expense-type');
@@ -18,10 +24,9 @@ let usersObj = JSON.parse(localStorage.getItem('user-with-email'));
 let registeredName = JSON.parse(localStorage.getItem('register-user-value'));
 let signedWithGoogleArr = [];
 let signedWithGoogle = JSON.parse(localStorage.getItem('user-with-google'));
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-import { auth } from "/config.js";
 
 
+// ., On auth state change function
 onAuthStateChanged(auth, (user) => {
   if (user) {
     const uid = user.uid;
@@ -34,7 +39,7 @@ onAuthStateChanged(auth, (user) => {
 
 
 
-
+// .,Event listener on submit function
 form.addEventListener('submit', event => {
   event.preventDefault();
 
@@ -80,14 +85,15 @@ form.addEventListener('submit', event => {
               listSection.style.display = 'block';
               listSection.style.transition = '0.6s ease-in';
               arr.push(obj);
+              console.log(arr)
+              
               renderList();
 
               // ., Recent page section started
               const daysOfWeek = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
               const todayDate = new Date();
-              const dayExecuter = todayDate.getDay();
-              // let tdayDateIndex = daysOfWeek[dayExecuter];
-              // const newDateDay = new Date().getDay();
+              const dayExecuter = todayDate.getDay()+1;
+              
               if (daysOfWeek[dayExecuter] === daysOfWeek[0]) {
                 let setArr = [];
                 let setObj = {
@@ -97,7 +103,7 @@ form.addEventListener('submit', event => {
                 setArr.push(setObj);
                 console.log(setArr);
 
-                console.log(`${daysOfWeek[0]} Expnese :`)
+                console.log(`${daysOfWeek[0]} Expnese ==> ${setArr}`)
               }
 
 
@@ -110,7 +116,7 @@ form.addEventListener('submit', event => {
                 sunArr.push(sunObj);
                 console.log(sunArr);
 
-                console.log(`${daysOfWeek[1]} Expnese :`)
+                console.log(`${daysOfWeek[1]} Expnese ==> ${sunArr}`)
               }
 
               if (daysOfWeek[dayExecuter] === daysOfWeek[2]) {
@@ -121,8 +127,8 @@ form.addEventListener('submit', event => {
                 }
                 monArr.push(monObj);
                 console.log(monArr);
-          
-                console.log(`${daysOfWeek[2]} Expnese :`)
+
+                console.log(`${daysOfWeek[2]} Expnese ==> ${monArr}`)
               }
 
               if (daysOfWeek[dayExecuter] === daysOfWeek[3]) {
@@ -134,19 +140,21 @@ form.addEventListener('submit', event => {
                 tueArr.push(tueObj);
                 console.log(tueArr);
 
-                console.log(`${daysOfWeek[3]} Expnese :`)
+                console.log(`${daysOfWeek[3]} Expnese ==>${tueArr}`)
               }
 
               if (daysOfWeek[dayExecuter] === daysOfWeek[4]) {
                 let wedArr = [];
                 let wedObj = {
+                  expenseType: expenseType.value,
                   expenseAmount: expenseAmount.value,
-                  expenseType: expenseType.value
                 }
                 wedArr.push(wedObj);
                 console.log(wedArr);
 
-                console.log(`${daysOfWeek[4]} Expnese :`)
+                console.log(`${daysOfWeek[4]} Expense ==>`,`Expense Type: `,wedArr[0].expenseType,`Expense Amount: `,wedArr[0].expenseAmount);
+                localStorage.setItem('wedArr',JSON.stringify(wedArr));
+                
               }
 
               if (daysOfWeek[dayExecuter] === daysOfWeek[5]) {
@@ -158,7 +166,7 @@ form.addEventListener('submit', event => {
                 thursArr.push(thursObj);
                 console.log(thursArr);
 
-                console.log(`${daysOfWeek[5]} Expnese :`)
+                console.log(`${daysOfWeek[5]} Expnese ==> ${thursArr}`)
               }
 
               if (daysOfWeek[dayExecuter] === daysOfWeek[6]) {
@@ -170,7 +178,7 @@ form.addEventListener('submit', event => {
                 friArr.push(friObj);
                 console.log(friArr);
 
-                console.log(`${daysOfWeek[6]} Expnese :`)
+                console.log(`${daysOfWeek[6]} Expnese ==> ${friArr}`)
               }
               // ., Recent page section ended
 
@@ -178,6 +186,8 @@ form.addEventListener('submit', event => {
             } else {
               alert('First letter should be in *capital* form');
             }
+              console.log("🚀 ~ arr:", arr)
+              console.log("🚀 ~ arr:", arr)
           }
         }
       }
@@ -188,6 +198,7 @@ form.addEventListener('submit', event => {
   }
 });
 
+// ., Render list function
 function renderList() {
   ulExpenseType.innerHTML = '';
   ulExpenseAmount.innerHTML = '';
@@ -200,154 +211,125 @@ function renderList() {
   for (let i = 0; i < totalArr.length; i++) {
     sum += totalArr[i];
   }
+  console.log(arr);
+localStorage.setItem('alldayArr',JSON.stringify(arr));
+  arr.map((item) => {
+    ulExpenseType.innerHTML += `<li class="todoLi"><button class="deleteBtn">Delete <i class="fa-solid fa-trash"></i></button> ${item.Type} <button class="editBut">Edit <i class="fa-solid fa-pen"></i></button></li>`
+    ulExpenseAmount.innerHTML += `<li> ${item.Amount} <button class="editButAmount">Edit <i class="fa-solid fa-pen"></i></button></li>`
+    ulExpenseDate.innerHTML += `<li class="dateLi"> ${item.DateAndTime}</li>`
+    ulExpenseDay.innerHTML += `<li class="dayLi">${item.Day}</li>`
+  })
 
-  arr.forEach((item, index) => {
-    const typeLi = document.createElement('li');
-    typeLi.style.display = 'flex';
-    typeLi.style.gap = '10px';
-    typeLi.style.alignItems = 'center';
+  // ., Delete button function
+  const deleteBtn = document.querySelectorAll('.deleteBtn');
+  console.log("🚀 ~ renderList ~ deleteBtn:", deleteBtn)
+  deleteBtn.forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+      arr.splice(index, 1);
+      totalArr.splice(index, 1);
+      if (totalArr.length === 0) {
+        listSection.style.display = 'none';
+      } else {
+        listSection.style.display = 'block';
+      }
+      renderList();
+    })
 
-    const deleteButton = document.createElement('button');
-    deleteButton.className = 'deleteButton';
-    deleteButton.innerHTML = 'Delete <i class="fa-solid fa-trash"></i>';
-    deleteButton.addEventListener('click', () => deleteExpense(index));
+  })
 
-    const typeText = document.createTextNode(item.Type);
 
-    const editTypeButton = document.createElement('button');
-    editTypeButton.className = 'editBut';
-    editTypeButton.innerHTML = 'Edit <i class="fa-solid fa-pen-to-square"></i>';
-    editTypeButton.addEventListener('click', () => editExpense(index));
+  // ., Edit type function
+  const editTypeBtn = document.querySelectorAll('.editBut');
+  editTypeBtn.forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+      editTypeBtn[index].textContent = 'Edited';
+      const updateExpenseType = prompt('Enter new expense type');
 
-    typeLi.appendChild(deleteButton);
-    typeLi.appendChild(typeText);
-    typeLi.appendChild(editTypeButton);
-    ulExpenseType.appendChild(typeLi);
+      // ., For get edit time
+      let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      let daysDate = new Date();
+      let dateNumber = daysDate.getDay();
+      if (updateExpenseType !== null && updateExpenseType !== '') {
+        let firstWordCapitalCheck = updateExpenseType.split('');
+        if (firstWordCapitalCheck[0] === firstWordCapitalCheck[0].toUpperCase()) {
+          if (isNaN(updateExpenseType)) {
+            let updatedExpense = {
+              Type: updateExpenseType,
+              Amount: arr[index].Amount,
+              DateAndTime: new Date().toLocaleString(),
+              Day: days[dateNumber]
+            };
 
-    const amountLi = document.createElement('li');
-    amountLi.className = 'expense-amount';
-    amountLi.innerHTML = `${item.Amount} `;
 
-    const editAmountButton = document.createElement('button');
-    editAmountButton.className = 'editBut';
-    editAmountButton.innerHTML = 'Edit <i class="fa-solid fa-pen-to-square"></i>';
-    editAmountButton.addEventListener('click', () => editAmount(index));
+            arr.splice(index, 1, updatedExpense);
+            renderList();
 
-    amountLi.appendChild(editAmountButton);
-    ulExpenseAmount.appendChild(amountLi);
+          } else {
+            alert('Please enter *string*');
+          }
+        } else {
+          alert('First letter should be *capital*');
+        }
+      } else {
+        alert('Please re-enter expense');
+      }
 
-    const dateLi = document.createElement('li');
-    dateLi.style.marginTop = '7px';
-    dateLi.textContent = item.DateAndTime;
-    ulExpenseDate.appendChild(dateLi);
+      console.log(`Edit type btn clicked.`, index);
 
-    const dayLi = document.createElement('li');
-    dayLi.style.marginTop = '7px';
-    dayLi.textContent = item.Day;
-    ulExpenseDay.appendChild(dayLi);
-  });
+    })
+  })
+
+
+  // ., Edit Amount function
+  const editAmountBtn = document.querySelectorAll('.editButAmount');
+  console.log("🚀 ~ renderList ~ editAmountBtn:", editAmountBtn)
+  editAmountBtn.forEach((editAmntBtn, index) => {
+    editAmntBtn.addEventListener('click', () => {
+      let updatedExpenseAmount = prompt('Enter new expense amount');
+
+      let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      let daysDate = new Date();
+      let dateNumber = daysDate.getDay();
+      if (updatedExpenseAmount !== null && updatedExpenseAmount !== '') {
+        if (isNaN(updatedExpenseAmount)) {
+          alert('Please enter *number*');
+        } else {
+          let checkZero = updatedExpenseAmount.split('');
+          if (checkZero[0] === '0') {
+            alert('First number should not be *zero(0)*');
+          } else {
+            if (updatedExpenseAmount.length <= 8) {
+              totalArr.splice(index, 1, Number(updatedExpenseAmount));
+
+              let updatedExpense = {
+                Type: arr[index].Type,
+                Amount: updatedExpenseAmount,
+                DateAndTime: new Date().toLocaleString(),
+                Day: days[dateNumber]
+              };
+              arr.splice(index, 1, updatedExpense);
+              renderList();
+              console.log(totalArr);
+            } else {
+              alert('You cannot enter an amount greater than *8* digits');
+            }
+          }
+        }
+      } else {
+        alert('Please re-enter amount');
+      }
+
+    })
+
+  })
 
   totalExpense.innerHTML = `Total Expense: ${sum}`;
-  expenseType.value = '';
-  expenseAmount.value = '';
+  // expenseType.value = '';
+  // expenseAmount.value = '';
 }
 
-function deleteExpense(index) {
-  arr.splice(index, 1);
-  totalArr.splice(index, 1);
-  if (totalArr.length === 0) {
-    listSection.style.display = 'none';
-  } else {
-    listSection.style.display = 'block';
-  }
-  renderList();
-}
 
-function editExpense(index) {
-  const updateExpenseType = prompt('Enter new expense type');
-
-  let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  let daysDate = new Date();
-  let dateNumber = daysDate.getDay();
-  if (updateExpenseType !== null && updateExpenseType !== '') {
-    let firstWordCapitalCheck = updateExpenseType.split('');
-    if (firstWordCapitalCheck[0] === firstWordCapitalCheck[0].toUpperCase()) {
-      if (isNaN(updateExpenseType)) {
-        let updatedExpense = {
-          Type: updateExpenseType,
-          Amount: arr[index].Amount,
-          DateAndTime: new Date().toLocaleString(),
-          Day: days[dateNumber]
-        };
-
-        arr.splice(index, 1, updatedExpense);
-        renderList();
-
-      } else {
-        alert('Please enter *string*');
-      }
-    } else {
-      alert('First letter should be *capital*');
-    }
-  } else {
-    alert('Please re-enter expense');
-  }
-}
-
-function editAmount(index) {
-  let updatedExpenseAmount = prompt('Enter new expense amount');
-
-  let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  let daysDate = new Date();
-  let dateNumber = daysDate.getDay();
-  if (updatedExpenseAmount !== null && updatedExpenseAmount !== '') {
-    if (isNaN(updatedExpenseAmount)) {
-      alert('Please enter *number*');
-    } else {
-      let checkZero = updatedExpenseAmount.split('');
-      if (checkZero[0] === '0') {
-        alert('First number should not be *zero(0)*');
-      } else {
-        if (updatedExpenseAmount.length <= 8) {
-          totalArr.splice(index, 1, Number(updatedExpenseAmount));
-
-          let updatedExpense = {
-            Type: arr[index].Type,
-            Amount: updatedExpenseAmount,
-            DateAndTime: new Date().toLocaleString(),
-            Day: days[dateNumber]
-          };
-
-          arr.splice(index, 1, updatedExpense);
-          renderList();
-          console.log(totalArr);
-        } else {
-          alert('You cannot enter an amount greater than *8* digits');
-        }
-      }
-    }
-  } else {
-    alert('Please re-enter amount');
-  }
-}
-
-// Function to delete all expenses
-function deleteAll() {
-  ulExpenseType.innerHTML = '';
-  ulExpenseAmount.innerHTML = '';
-  ulExpenseDate.innerHTML = '';
-  ulExpenseDay.innerHTML = '';
-  totalExpense.innerHTML = 'Total Expense: 0';
-  arr.splice(0, arr.length);
-  totalArr.splice(0, totalArr.length);
-  setTimeout(() => {
-    listSection.style.display = 'none';
-  }, 1000);
-}
-
-// Attach event listener to delete all button
-deleteAllButton.addEventListener('click', deleteAll);
-
+// ., Sign out function with user details section
 signOutDetailButton.addEventListener('click', () => {
   if (detailList.style.display === 'block') {
     detailList.style.display = 'none';
@@ -361,7 +343,6 @@ if (usersObj) {
   usersObjArr.push(usersObj);
 }
 
-import { signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 signOutDetailButton.addEventListener('click', () => {
   if (registeredName && !signedWithGoogle) {
 
@@ -375,12 +356,11 @@ signOutDetailButton.addEventListener('click', () => {
     console.log('You are not registered with eamil');
   }
 
-  // ., Sign Out Function
+
+  // ., Sign out function
   if (registeredName) {
     const signOutButton = document.getElementById('signOutButton');
     console.log(`You are registered with email`);
-
-    // Add an event listener to the button
     signOutButton.addEventListener('click', function () {
       signOut(auth).then(() => {
         alert(`Sign-out successful.`);
@@ -429,4 +409,20 @@ if (signedWithGoogle && !registeredName) {
     });
   }
 }
+
+// ., Delelte all function
+deleteAllButton.addEventListener('click', () => {
+  totalArr.splice(0, totalArr.length);
+  console.log(totalArr);
+  if (totalArr.length === 0) {
+    ulExpenseType.innerHTML = '';
+    ulExpenseAmount.innerHTML = '';
+    ulExpenseDate.innerHTML = '';
+    ulExpenseDay.innerHTML = '';
+  }
+  totalExpense.innerHTML = `Total Expense: 0`;
+  setTimeout(() => {
+    listSection.style.display = 'none';
+  }, 1000)
+})
 
